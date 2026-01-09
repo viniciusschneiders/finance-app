@@ -12,4 +12,18 @@ model User {
   email     String   @unique
   password  String
   createdAt DateTime @default(now())
+
+  cards     Card[]
+}
+
+model Card {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, name])
+  @@index([userId])
 }
